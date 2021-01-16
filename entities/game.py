@@ -40,7 +40,7 @@ class Move:
 # Game instance
 class Game:
 	data = []
-	resolution = 1000
+	resolution = 100
 	results = { 
 		"CPU": 0,
 		"Player": 0,
@@ -49,7 +49,7 @@ class Game:
 	}
 
 	# resolution to determine stats to cpu moves
-	def __init__(self, resolution = 1000):
+	def __init__(self, resolution = 100):
 		self.resolution = resolution
 
 		# fill the stats with balanced values from start

@@ -26,9 +26,9 @@
     <div class="container">
       <h1>Jokepo Server</h1>
       </h1>
-	  <button type="button" onclick="callPaper()" >try paper</button>
-	  <button type="button" onclick="callRock()" >try rock</button>
-	  <button type="button" onclick="callScisor()" >try scisor</button>
+	  <button type="button" onclick="tryPaper()" >try paper</button>
+	  <button type="button" onclick="tryRock()" >try rock</button>
+	  <button type="button" onclick="tryScisor()" >try scisor</button>
 
 	  <h2>Stats</h2>
 	  <p id="stats"></p> <br>
@@ -48,31 +48,56 @@
 	</div>
 	
 	<script>
-		function callStats() {
+		function getStats() {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var stats, score = ""
+			if (this.readyState == 4 && this.status == 200) {				
 				obj = JSON.parse(this.responseText);
 				
+				var stats = ""
 				stats += "<table border='1'>";
 				stats += "<tr><th>Paper</th><th>Scisor</th><th>Rock</th><th>Resolution</th></tr>";
 				stats += "<tr><td>" + obj["P"] + "</td><td>" + obj["S"] + "</td><td>" + obj["R"] + "</td><td>" + obj["resolution"] + "</td></tr>";
 				stats += "</table>";
 				document.getElementById("stats").innerHTML = stats;
 
+				var score = ""
 				score += "<table border='1'>";
 				score += "<tr><th>Player</th><th>CPU</th><th>DRAW</th><th>TOTAL</th></tr>";
 				score += "<tr><td>" + obj["score"].Player + "</td><td>" + obj["score"].CPU + "</td><td>" + obj["score"].DRAW + "</td><td>" + obj["score"].TOTAL + "</td></tr>";
 				score += "</table>";
-				document.getElementById("score").innerHTML = score;				
-
-				
+				document.getElementById("score").innerHTML = score;								
 			}
 			};
 			xhttp.open("GET", "http://localhost:8081/stats", true);
 			xhttp.setRequestHeader("Content-type", "application/json");
 			xhttp.send("");
+		}
+
+		function tryPaper() {
+			sendTry("http://localhost:8081/paper")
+		}
+
+		function tryRock() {
+			sendTry("http://localhost:8081/rock")
+		}
+		
+		function tryScisor() {
+			sendTry("http://localhost:8081/scisor")
+		}
+
+		function sendTry(url) {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+						parserResponse(this.responseText)
+					}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send("");
+
+			getStats();
 		}
 
 		function parserResponse(response) {
@@ -91,48 +116,6 @@
 			playerMove.innerHTML = obj["player"].optName;
 			cpuMove.innerHTML = obj["cpu"].optName;
 			moveResult.innerHTML = obj["result"];
-		}
-
-		function callPaper() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-						parserResponse(this.responseText)
-					}
-			};
-			xhttp.open("POST", "http://localhost:8081/paper", true);
-			xhttp.setRequestHeader("Content-type", "application/json");
-			xhttp.send("");
-
-			callStats();
-		}
-
-		function callRock() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-						parserResponse(this.responseText)
-					}
-			};
-			xhttp.open("POST", "http://localhost:8081/rock", true);
-			xhttp.setRequestHeader("Content-type", "application/json");
-			xhttp.send("");
-
-			callStats();
-		}
-		
-		function callScisor() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-						parserResponse(this.responseText)
-					}
-			};
-			xhttp.open("POST", "http://localhost:8081/scisor", true);
-			xhttp.setRequestHeader("Content-type", "application/json");
-			xhttp.send("");
-
-			callStats();
 		}		
 	</script>
   </body>
