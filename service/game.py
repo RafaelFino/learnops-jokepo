@@ -8,7 +8,7 @@ OPT = ["P", "S", "R"]
 # options names
 OPT_NAMES = { 
 	"P": "Paper",
-	"S": "Scisor",
+	"S": "Scissor",
 	"R": "Rock"
 }
 

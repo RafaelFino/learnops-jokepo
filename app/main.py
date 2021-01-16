@@ -19,8 +19,8 @@ async def Paper():
 async def Rock():
     return instance.Execute("R")
 
-@app.post("/scisor")
-async def Scisor():
+@app.post("/scissor")
+async def Scissor():
     return instance.Execute("S")
 
 @app.get("/stats")

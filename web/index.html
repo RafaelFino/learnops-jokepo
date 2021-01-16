@@ -28,7 +28,7 @@
       </h1>
 	  <button type="button" onclick="tryPaper()" >try paper</button>
 	  <button type="button" onclick="tryRock()" >try rock</button>
-	  <button type="button" onclick="tryScisor()" >try scisor</button>
+	  <button type="button" onclick="tryScissor()" >try scissor</button>
 
 	  <h2>Stats</h2>
 	  <p id="stats"></p> <br>
@@ -56,7 +56,7 @@
 				
 				var stats = ""
 				stats += "<table border='1'>";
-				stats += "<tr><th>Paper</th><th>Scisor</th><th>Rock</th><th>Resolution</th></tr>";
+				stats += "<tr><th>Paper</th><th>Scissor</th><th>Rock</th><th>Resolution</th></tr>";
 				stats += "<tr><td>" + obj["P"] + "%</td><td>" + obj["S"] + "% </td><td>" + obj["R"] + "% </td><td>" + obj["resolution"] + "</td></tr>";
 				stats += "</table>";
 				document.getElementById("stats").innerHTML = stats;
@@ -82,8 +82,8 @@
 			sendTry("http://localhost:8081/rock")
 		}
 		
-		function tryScisor() {
-			sendTry("http://localhost:8081/scisor")
+		function tryScissor() {
+			sendTry("http://localhost:8081/scissor")
 		}
 
 		function sendTry(url) {
