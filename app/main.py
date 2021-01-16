@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from datetime import datetime
-from lib.game import *
+from service.game import *
 
 app = FastAPI()
 instance = Game()
