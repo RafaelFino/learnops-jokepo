@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>REST Client</title>
+    <title>Jokepo Python</title>
   </head>
   <style>
 	table {
@@ -24,7 +24,7 @@
 	</style>  
   <body>
     <div class="container">
-      <h1>Jokepo Server</h1>
+      <h1>Jokepo Python - Web Client</h1>
       </h1>
 	  <button type="button" onclick="tryPaper()" >try paper</button>
 	  <button type="button" onclick="tryRock()" >try rock</button>
@@ -57,7 +57,7 @@
 				var stats = ""
 				stats += "<table border='1'>";
 				stats += "<tr><th>Paper</th><th>Scisor</th><th>Rock</th><th>Resolution</th></tr>";
-				stats += "<tr><td>" + obj["P"] + "</td><td>" + obj["S"] + "</td><td>" + obj["R"] + "</td><td>" + obj["resolution"] + "</td></tr>";
+				stats += "<tr><td>" + obj["P"] + "%</td><td>" + obj["S"] + "% </td><td>" + obj["R"] + "% </td><td>" + obj["resolution"] + "</td></tr>";
 				stats += "</table>";
 				document.getElementById("stats").innerHTML = stats;
 
