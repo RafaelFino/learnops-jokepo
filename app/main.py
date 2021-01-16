@@ -24,7 +24,7 @@ async def Scisor():
     return instance.Execute("S")
 
 @app.get("/stats")
-async def Paper():
+async def Stats():
     return instance.Stats()
 
 @app.get("/", response_class=HTMLResponse)
@@ -34,3 +34,8 @@ async def Home():
 	f.close()
 	return home
 
+@app.get("/test")
+async def Test():
+	instance.Test(10000)
+	return instance.Stats()
+		

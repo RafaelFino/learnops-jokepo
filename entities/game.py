@@ -40,7 +40,7 @@ class Move:
 # Game instance
 class Game:
 	data = []
-	resolution = 100
+	resolution = 1000
 	results = { 
 		"CPU": 0,
 		"Player": 0,
@@ -49,13 +49,18 @@ class Game:
 	}
 
 	# resolution to determine stats to cpu moves
-	def __init__(self, resolution = 100):
+	def __init__(self, resolution = 1000):
 		self.resolution = resolution
 
 		# fill the stats with balanced values from start
 		for r in range(resolution):
 			for o in OPT:
 				self.data.append(o)
+
+	# Test a count of events
+	def Test(self, count):
+		for i in range(count):
+			self.Execute(OPT[random.randint(0, len(OPT)-1)])
 
 	# execute a player move
 	def Execute(self, opt):
