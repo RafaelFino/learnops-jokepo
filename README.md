@@ -1,7 +1,5 @@
 # learnops-jokepo
-A simple jokepo game in python
-
-Apredendo a codar: Um pequeno jogo de jokepo
+Joguinho simples de jokempô em python, chamado de "jokepo" por um erro bobo de digitação...
 
 Leia, pode te ajudar: https://python.org.br/introducao/
 
