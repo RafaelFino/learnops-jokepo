@@ -36,7 +36,7 @@ class Game:
 	resolution = 1000
 
 	# resolution to determine stats to cpu moves
-	def __init__(self, resolution):
+	def __init__(self, resolution = 1000):
 		self.resolution = resolution
 
 		# fill the stats with balanced values from start

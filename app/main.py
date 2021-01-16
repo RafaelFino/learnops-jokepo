@@ -4,7 +4,7 @@ from datetime import datetime
 from entities.game import *
 
 app = FastAPI()
-instance = Game(500)
+instance = Game()
 
 
 @app.get("/ping")
