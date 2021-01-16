@@ -19,6 +19,13 @@ OPT_EVALUATE = {
 	"S": "P"
 }
 
+# try to increase stats
+OPT_DATA = {
+	"P": "S",
+	"R": "P",
+	"S": "R"
+}
+
 # Move object
 class Move:
 	opt = ""
@@ -34,6 +41,12 @@ class Move:
 class Game:
 	data = []
 	resolution = 1000
+	results = { 
+		"CPU": 0,
+		"Player": 0,
+		"DRAW": 0,
+		"TOTAL": 0,
+	}
 
 	# resolution to determine stats to cpu moves
 	def __init__(self, resolution = 1000):
@@ -48,12 +61,16 @@ class Game:
 	def Execute(self, opt):
 		mv = Move("Player", opt)
 		cpu = self.CPUMove()
+		result = self.evaluate(mv, cpu)
+
+		self.results[result] = self.results[result] + 1
+		self.results["TOTAL"] = self.results["TOTAL"] + 1
 		
 		return {
 			"timestamp": datetime.now().time(),
 			"player": mv,
 			"cpu": cpu,
-			"result": self.evaluate(mv, cpu)
+			"result": result
 		}			
 
 	# evaluate two moves to determine who wins
@@ -61,12 +78,12 @@ class Game:
 		# don't computate CPU moves
 		if move1.player != "CPU":
 			# increase the winner awser for future
-			self.data.append(OPT_EVALUATE[move1.opt])
+			self.data.append(OPT_DATA[move1.opt])
 
 		# don't computate CPU moves, again
 		if move2.player != "CPU":
 			# increase the winner awser for future, again
-			self.data.append(OPT_EVALUATE[move2.opt])
+			self.data.append(OPT_DATA[move2.opt])
 
 		# fits data to limit array size
 		while len(self.data) > self.resolution:
@@ -103,6 +120,7 @@ class Game:
 		# include other usefull data on return object
 		ret["resolution"] = self.resolution
 		ret["len"] = len(self.data)
+		ret["score"] = self.results
 		
 		return ret
 

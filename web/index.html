@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REST Client</title>
+  </head>
+  <style>
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+	
+	td, th {
+	  border: 1px solid #dddddd;
+	  text-align: left;
+	  padding: 8px;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #dddddd;
+	}
+	</style>  
+  <body>
+    <div class="container">
+      <h1>Jokepo Server</h1>
+      </h1>
+	  <button type="button" onclick="callPaper()" >try paper</button>
+	  <button type="button" onclick="callRock()" >try rock</button>
+	  <button type="button" onclick="callScisor()" >try scisor</button>
+
+	  <h2>Stats</h2>
+	  <p id="stats"></p> <br>
+
+	  <h2>Score</h2>
+	  <p id="score"></p> <br>	
+
+	  <h2>Results</h2>
+	  <table id="results">
+		  <tr>
+			<th>timestamp</th>
+			<th>Player</th>
+			<th>CPU</th>
+			<th>Result</th>
+		  </tr>
+	  </table>
+	</div>
+	
+	<script>
+		function callStats() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var stats, score = ""
+				obj = JSON.parse(this.responseText);
+				
+				stats += "<table border='1'>";
+				stats += "<tr><th>Paper</th><th>Scisor</th><th>Rock</th><th>Resolution</th></tr>";
+				stats += "<tr><td>" + obj["P"] + "</td><td>" + obj["S"] + "</td><td>" + obj["R"] + "</td><td>" + obj["resolution"] + "</td></tr>";
+				stats += "</table>";
+				document.getElementById("stats").innerHTML = stats;
+
+				score += "<table border='1'>";
+				score += "<tr><th>Player</th><th>CPU</th><th>DRAW</th><th>TOTAL</th></tr>";
+				score += "<tr><td>" + obj["score"].Player + "</td><td>" + obj["score"].CPU + "</td><td>" + obj["score"].DRAW + "</td><td>" + obj["score"].TOTAL + "</td></tr>";
+				score += "</table>";
+				document.getElementById("score").innerHTML = score;				
+
+				
+			}
+			};
+			xhttp.open("GET", "http://localhost:8081/stats", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send("");
+		}
+
+		function parserResponse(response) {
+			var txt = ""
+			obj = JSON.parse(response);
+
+			var table = document.getElementById("results");
+			var row = table.insertRow(1);
+
+			var moveTime = row.insertCell(0);
+			var playerMove = row.insertCell(1);
+			var cpuMove = row.insertCell(2);
+			var moveResult = row.insertCell(3);
+			
+			moveTime.innerHTML = obj["timestamp"];
+			playerMove.innerHTML = obj["player"].optName;
+			cpuMove.innerHTML = obj["cpu"].optName;
+			moveResult.innerHTML = obj["result"];
+		}
+
+		function callPaper() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+						parserResponse(this.responseText)
+					}
+			};
+			xhttp.open("POST", "http://localhost:8081/paper", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send("");
+
+			callStats();
+		}
+
+		function callRock() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+						parserResponse(this.responseText)
+					}
+			};
+			xhttp.open("POST", "http://localhost:8081/rock", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send("");
+
+			callStats();
+		}
+		
+		function callScisor() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+						parserResponse(this.responseText)
+					}
+			};
+			xhttp.open("POST", "http://localhost:8081/scisor", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send("");
+
+			callStats();
+		}		
+	</script>
+  </body>
+</html>
