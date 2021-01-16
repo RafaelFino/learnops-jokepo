@@ -13,14 +13,14 @@ OPT_NAMES = {
 }
 
 # who win from who
-OPT_EVALUATE = {
+OPT_WIN = {
 	"P": "R",
 	"R": "S",
 	"S": "P"
 }
 
 # try to increase stats
-OPT_DATA = {
+OPT_LOSE = {
 	"P": "S",
 	"R": "P",
 	"S": "R"
@@ -57,7 +57,7 @@ class Game:
 			for o in OPT:
 				self.data.append(o)
 
-	# Test a count of events
+	# Test a row of events
 	def Test(self, count):
 		for i in range(count):
 			self.Execute(OPT[random.randint(0, len(OPT)-1)])
@@ -83,12 +83,12 @@ class Game:
 		# don't computate CPU moves
 		if move1.player != "CPU":
 			# increase the winner awser for future
-			self.data.append(OPT_DATA[move1.opt])
+			self.data.append(OPT_LOSE[move1.opt])
 
 		# don't computate CPU moves, again
 		if move2.player != "CPU":
 			# increase the winner awser for future, again
-			self.data.append(OPT_DATA[move2.opt])
+			self.data.append(OPT_LOSE[move2.opt])
 
 		# fits data to limit array size
 		while len(self.data) > self.resolution:
@@ -97,7 +97,7 @@ class Game:
 		if move1.opt == move2.opt:
 			return "DRAW"
 		
-		if OPT_EVALUATE.get(move1.opt) == move2.opt:
+		if OPT_WIN.get(move1.opt) == move2.opt:
 			return move1.player
 
 		return move2.player
