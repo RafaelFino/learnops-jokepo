@@ -88,7 +88,7 @@ class Game:
 	def Stats(self):
 		ret = {}
 
-		# fil return object
+		# fill the return object
 		for o in OPT:
 			ret[o] = 0
 
@@ -96,7 +96,7 @@ class Game:
 		for o in self.data:
 			ret[o] = ret.get(o) + 1
 
-		# convert in percenet values
+		# convert data to percenet values
 		for r in ret:
 			ret[r] = round(ret[r]/len(self.data)*100, 2)
 
